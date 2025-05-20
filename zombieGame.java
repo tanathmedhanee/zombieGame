@@ -6,10 +6,6 @@ public class zombieGame {
         int[] playerPosition = {0, 0};
         boolean inCombat = false;
 
-        if (inCombat == true) {
-            System.out.println("work");
-        }
-
         while (inCombat == false) {
             System.out.println("use WASD to move");
             System.out.println("you are in room " + playerPosition[0] + ", " + playerPosition[1]);
@@ -42,14 +38,16 @@ public class zombieGame {
                 playerPosition[1] = 0;
                 }
 
-            if (playerPosition[0] == 2) {
-                System.out.println("combatt");
+            if (playerPosition[0] == 2) { //put rooms of interest in here, change to switch case later
+                System.out.println("zombie in room 2, 0!");
                 inCombat = true;
             }
         }
 
         if (inCombat == true) {
-            System.out.println("work");
+
+            System.out.println("combat code goes here");
+
         }
     }
 }
