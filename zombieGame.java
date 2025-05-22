@@ -9,6 +9,7 @@ public class zombieGame {
         boolean inCombat = false;
         boolean npcInteractedWith = false;
 
+//MOVEMENT CODE
         while (gameOver == false) {
             while (inCombat == false) {
                 System.out.println("use WASD to move");
@@ -35,14 +36,16 @@ public class zombieGame {
                         default: System.out.println("invalid input");
                             break;
                     }
-    
+
+//RESETS PLAYER TO 1/1 IF OUT OF BOUNDS
                 if (playerPosition[0] >= 6 || playerPosition[0] <= 0 || playerPosition[1] >= 6 || playerPosition[1] <= 0) {
                     System.out.println("out of bounds");
                     playerPosition[0] = 1;
                     playerPosition[1] = 1;
                     }
     
-                if (playerPosition[0] == 5 && playerPosition[1] == 5 && npcInteractedWith == false) { //NPC interaction
+//NPC INTERACTION 5/5
+                    if (playerPosition[0] == 5 && playerPosition[1] == 5 && npcInteractedWith == false) {
                     System.out.println("you spot an injured man in room " + playerPosition[0] + ", " + playerPosition[1]);
                     inCombat = true;
                     System.out.println("Name's Christian. This base was overrun with these things a couple hours ago. From my guess, I'm the only one who's still alive. I'm badly wounded... there's no saving me. Listen, I need a favor from you. Please... end my suffering. In return, I'll give you my medkit. (Y/N)");
@@ -62,9 +65,52 @@ public class zombieGame {
                             break;
                     }
                 }
-    
-                if (playerPosition[0] == 2 && playerPosition[1] == 2) { //put rooms of interest in here, change to switch case later
-                    System.out.println("a zombie attacks you in " + playerPosition[0] + ", " + playerPosition[1]);
+
+//CAFETERIA 1/1
+                if (playerPosition[0] == 1 && playerPosition[1] == 1) {
+                    System.out.println("you are in the cafeteria at " + playerPosition[0] + ", " + playerPosition[1]);
+                    inCombat = true;
+                }
+
+//ARMOURY 1/3
+                if (playerPosition[0] == 1 && playerPosition[1] == 3) {
+                    System.out.println("you are in the armoury at " + playerPosition[0] + ", " + playerPosition[1]);
+                    inCombat = true;
+                }
+
+//RADIO ROOM 4/4
+                if (playerPosition[0] == 4 && playerPosition[1] == 4) {
+                    System.out.println("you are in the radio room bay at " + playerPosition[0] + ", " + playerPosition[1]);
+                    inCombat = true;
+                }
+
+//LAUNDRY 1/5
+                if (playerPosition[0] == 1 && playerPosition[1] == 5) {
+                    System.out.println("you are in the cleaning room (laundry) " + playerPosition[0] + ", " + playerPosition[1]);
+                    inCombat = true;
+                }
+
+//BARRACKS 3/5
+                if (playerPosition[0] == 3 && playerPosition[1] == 5) {
+                    System.out.println("you are in the barracks at " + playerPosition[0] + ", " + playerPosition[1]);
+                    inCombat = true;
+                }
+
+//GARAGE 4/5
+                if (playerPosition[0] == 4 && playerPosition[1] == 5) {
+                    System.out.println("you are in the garage (room) at " + playerPosition[0] + ", " + playerPosition[1]);
+                    inCombat = true;
+                }
+
+//HELIPAD 5/1
+                if (playerPosition[0] == 5 && playerPosition[1] == 1) {
+                    System.out.println("you are at the helipad at " + playerPosition[0] + ", " + playerPosition[1]);
+                    inCombat = true;
+                }
+                
+//MEDIC BAY 3/3
+                if (playerPosition[0] == 3 && playerPosition[1] == 1) {
+                    System.out.println("you are in the medic bay " + playerPosition[0] + ", " + playerPosition[1]);
                     inCombat = true;
                 }
             }
