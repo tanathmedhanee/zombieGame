@@ -1,0 +1,119 @@
+import java.util.Scanner;
+//github test
+public class grid {
+    @SuppressWarnings("unlikely-arg-type")
+    public static void start() {
+        introduction introduction = new introduction();
+        Scanner playerMoveInputScan = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
+        int[] playerPosition = {1, 1};
+        boolean inCombat = false;
+        System.out.println("use WASD to move");
+
+        
+        //items
+        int[] inventory = new int[5]; 
+
+        int food = 1;
+        int weapon = 1;
+        int keys = 1;
+        int gas = 1;
+
+        while (inCombat == false) {
+            
+            System.out.println("you are in room " + playerPosition[0] + ", " + playerPosition[1]);
+            String playerMoveInput = playerMoveInputScan.nextLine().toUpperCase();
+    
+                switch (playerMoveInput) {
+                    case "W":
+                        playerPosition[0] = playerPosition[0] + 1;
+                        break;
+                    
+                    case "A":
+                    playerPosition[1] = playerPosition[1] + 1;
+                        break;
+                    
+                    case "S":
+                    playerPosition[0] = playerPosition[0] - 1;
+                        break;
+                        
+                    case "D":
+                    playerPosition[1] = playerPosition[1] - 1;
+                        break;
+                    
+                    default: System.out.println("invalid input");
+                        break;
+                }
+
+
+
+
+
+            if (playerPosition[0] >=6 || playerPosition[0] <= 0 || playerPosition[1] >= 6 || playerPosition[1] <= 0) {
+                System.out.println("out of bounds");
+                playerPosition[0] = 1;
+                playerPosition[1] = 1;
+                }
+
+            
+            
+            if (playerPosition[0] == 1 && playerPosition[1] == 1) { //put rooms of interest in here, change to switch case later
+                System.out.println("You are in the Cafeteria ");
+                System.out.println("There is 1 can of food here, would you like to add in your inventory? y/n");
+                    String foodInput = input.nextLine();
+                    if (input.equals("y")) {
+                        food 
+                    }
+
+            
+        }   
+            if (playerPosition[0] == 1 && playerPosition[1] == 3) { //put rooms of interest in here, change to switch case later
+                System.out.println("You are in the armory");
+            
+        }
+            if (playerPosition[0] == 1 && playerPosition[1] == 4) { //put rooms of interest in here, change to switch case later
+                
+            
+        }   
+            if (playerPosition[0] == 1 && playerPosition[1] == 5) { //put rooms of interest in here, change to switch case later
+                System.out.println("You are in the cleaning room");
+            
+        }   
+
+
+
+            if (playerPosition[0] == 3 && playerPosition[1] == 5) { //put rooms of interest in here, change to switch case later
+                System.out.println("You are in the barracks room");
+            
+        }   
+            if (playerPosition[0] == 4 && playerPosition[1] == 5) { //put rooms of interest in here, change to switch case later
+                System.out.println("You are in the garage room");
+            
+        }
+            if (playerPosition[0] == 5 && playerPosition[1] == 1) { //put rooms of interest in here, change to switch case later
+                System.out.println("You are at the helipad");
+            
+        }   
+            if (playerPosition[0] == 3 && playerPosition[1] == 3) { //put rooms of interest in here, change to switch case later
+                System.out.println("You are at the medic bay");
+                
+                
+            
+        }   
+            if (playerPosition[0] == 3 && playerPosition[1] == 2) { //put rooms of interest in here, change to switch case later
+                System.out.println("You are at Radioroom");
+            
+        }   
+            if (playerPosition[0] == 4 && playerPosition[1] == 4) { //put rooms of interest in here, change to switch case later
+                System.out.println("You are at the medic bay");
+            
+        }
+
+        if (inCombat == true) {
+
+            System.out.println("combat code goes here");
+
+        }
+        }
+    }
+}
