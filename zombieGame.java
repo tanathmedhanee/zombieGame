@@ -1,9 +1,9 @@
 import java.util.Scanner;
-
+//github test
 public class zombieGame {
     public static void main(String[] args) {
         Scanner playerMoveInputScan = new Scanner(System.in);
-        int[] playerPosition = {0, 0};
+        int[] playerPosition = {1, 1};
         boolean inCombat = false;
 
         while (inCombat == false) {
@@ -32,14 +32,14 @@ public class zombieGame {
                         break;
                 }
 
-            if (playerPosition[0] >= 6 || playerPosition[0] <= -1 || playerPosition[1] >= 6 || playerPosition[1] <= -1) {
+            if (playerPosition[0] >= 7 || playerPosition[0] <= 0 || playerPosition[1] >= 7 || playerPosition[1] <= 0) {
                 System.out.println("out of bounds");
-                playerPosition[0] = 0;
-                playerPosition[1] = 0;
+                playerPosition[0] = 1;
+                playerPosition[1] = 1;
                 }
 
-            if (playerPosition[0] == 2) { //put rooms of interest in here, change to switch case later
-                System.out.println("zombie in room 2, 0!");
+            if (playerPosition[0] == 2 && playerPosition[1] == 2) { //put rooms of interest in here, change to switch case later
+                System.out.println("zombie in room 2, 2!");
                 inCombat = true;
             }
         }
