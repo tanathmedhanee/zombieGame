@@ -1,0 +1,21 @@
+public class combatSystem {
+    
+    public static void combatStart(Player player) {
+        
+        zombieNpc zombie = new zombieNpc("Zombie soldier", 5, 2);
+
+        while (player.isAlive() && zombie.isAlive()) {
+            player.damage(zombie);
+            System.out.println("Remaining Zombie health: " + zombie.updatedHealth());
+            
+            if (zombie.isAlive()) {
+                zombie.damage(player);
+            }
+        }
+        if (player.isAlive() && !zombie.isAlive()) {
+            System.out.println(zombie.toString() + " has been defeated");
+            System.out.println(player.toString() + " survives with " + player.updatedHealth());
+        }
+    }
+}
+
