@@ -1,0 +1,35 @@
+public class Player {
+    //object class for player
+    String name;
+    double health;
+    double damage;
+    //constructors for player class
+    public Player(String name, double health, double damage) {
+        this.name = name;
+        this.health = health;
+        this.damage = damage;
+    }
+    //method for damaging zombies
+    public void damage(zombieNpc zombie) {
+        zombie.health -= this.damage;
+        System.out.println(name + " Has damaged " + zombie + " by " + damage + " health");
+    }
+    //method for player getting damaged
+    public void damageTaken(double reduction) {
+        this.health -= reduction;
+        System.out.println();
+    }
+    public String toString() {
+        return name;
+    }
+    public boolean isAlive() {
+        return this.health > 0;
+    }
+    public double updatedHealth() {
+        return health;
+    }
+    public String getName() {
+        return name;
+    }
+}
+
