@@ -1,8 +1,14 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class zombieGame {
+public class zz {
     public static void main(String[] args) {
+        //INTRODUCTION STARTS
+        introduction.intro();
+        //PLAYER CONSTRUCTOR
+        Player player = new Player("Player", 10.0, 3);
+
+        
         Scanner playerMoveInputScan = new Scanner(System.in);
         Scanner playerDecisionInputScan = new Scanner(System.in);
         int[] playerPosition = {1, 1};
@@ -11,6 +17,7 @@ public class zombieGame {
         boolean gameOver = false;
         boolean movePaused = false;
         boolean npcInteractedWith = false;
+        boolean zombieDefeated = false;
 
 //MOVEMENT CODE
         while (gameOver == false) {
@@ -68,13 +75,7 @@ public class zombieGame {
                         switch (playerDecisionInput) {
                             case "Y":
                             System.out.println("You steady your hand and do what must be done. Christian's suffering ends peacefully. You take the medkit he left behind. 'This should keep you alive out there,' you whisper to yourself.");
-
-                            if (inventoryArray.size() >= 6) { //stops player from adding 6th item to inventory
-                                System.out.println("Your backpack is already full. (MAX 5 ITEMS)");
-                            } else {
-                                inventoryArray.add("MedKit");
-                                System.out.println("You take the medkit from his hands. YOUR BACKPACK CONTAINS: " + inventoryArray);
-                            }
+                            inventoryArray.add("Medkit");
                             movePaused = false;
                             npcInteractedWith = true;
                             break;
@@ -97,24 +98,27 @@ public class zombieGame {
                         String playerDecisionInput = playerDecisionInputScan.nextLine().toUpperCase();
                         switch (playerDecisionInput) {
                             case "Y":
-                                if (inventoryArray.size() >= 6) { //stops player from adding 6th item to inventory
-                                    System.out.println("Your backpack is already full. (MAX 5 ITEMS)");
-                                } else {
-                                    inventoryArray.add("Energy Drink");
-                                    System.out.println("You take an energy drink from the pile. YOUR BACKPACK CONTAINS: " + inventoryArray);
-                                }
+                                inventoryArray.add("Energy Drink");
+                                System.out.println("You grab an energy drink and store it in your bag. YOUR BACKPACK CONTAINS: " + inventoryArray);
                                 movePaused = false;
                                 break;
                         
                             default:
-                                movePaused = false;
                                 break;
                         }
-
                         break;
 
-                    case "1, 3": //ARMOURY
+                    case "1, 3": //ARMOURY ZOMBIE COMBAT STARTS
                         System.out.println("YOU ARE IN THE ARMOURY.");
+                        if (!zombieDefeated) {
+                            combatSystem.combatStart(player);
+                            if (player.isAlive()) {
+                                zombieDefeated = true;
+                            } else {
+                                System.out.println("You have died");
+                                break;
+                            }
+                        }
                         break;
 
                     case "4, 4": //RADIO ROOM
@@ -129,8 +133,11 @@ public class zombieGame {
                         System.out.println("YOU ARE IN THE BARRACKS.");
                         break;
 
-                    case "4, 5": //GARAGE
+                    case "4, 5": //GARAGE ZOMBIE COMBAT STARTS
                         System.out.println("YOU ARE IN THE GARAGE.");
+                        System.out.println("You are in the garage room a zombie has appeared!. ");
+                        zombieNpc zombieWorker = new zombieNpc("Zombie soldier", 2, 2);
+                        combatSystem.combatStart(player);
                         break;
 
                     case "5, 1": //HELIPAD
@@ -147,6 +154,8 @@ public class zombieGame {
                 }
             }
         }
+
+        
 
         if (movePaused == true) {
 
