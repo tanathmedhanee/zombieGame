@@ -1,0 +1,26 @@
+import java.util.Random;
+public class zombieNpc {
+    String name;
+    double health;
+    double damage;
+
+    public zombieNpc(String name, double health, double damage) {
+        this.name = name;
+        this.health = health;
+        this.damage = damage;
+    }
+    public void damage(Player player) {
+        player.damageTaken(this.damage);
+        System.out.println("The " + name + " Has attacked you, you have taken  " + damage + " damage!");
+    }
+    public boolean isAlive() {
+        return this.health > 0;
+    }
+    public String toString() {
+        return name;
+    }
+    public double updatedHealth() {
+        return health;
+    }
+}   
+ 
