@@ -68,7 +68,13 @@ public class zombieGame {
                         switch (playerDecisionInput) {
                             case "Y":
                             System.out.println("You steady your hand and do what must be done. Christian's suffering ends peacefully. You take the medkit he left behind. 'This should keep you alive out there,' you whisper to yourself.");
-                            inventoryArray.add("Medkit");
+
+                            if (inventoryArray.size() >= 6) { //stops player from adding 6th item to inventory
+                                System.out.println("Your backpack is already full. (MAX 5 ITEMS)");
+                            } else {
+                                inventoryArray.add("MedKit");
+                                System.out.println("You take the medkit from his hands. YOUR BACKPACK CONTAINS: " + inventoryArray);
+                            }
                             movePaused = false;
                             npcInteractedWith = true;
                             break;
@@ -91,12 +97,17 @@ public class zombieGame {
                         String playerDecisionInput = playerDecisionInputScan.nextLine().toUpperCase();
                         switch (playerDecisionInput) {
                             case "Y":
-                                inventoryArray.add("Energy Drink");
-                                System.out.println("You grab an energy drink and store it in your bag. YOUR BACKPACK CONTAINS: " + inventoryArray);
+                                if (inventoryArray.size() >= 6) { //stops player from adding 6th item to inventory
+                                    System.out.println("Your backpack is already full. (MAX 5 ITEMS)");
+                                } else {
+                                    inventoryArray.add("Energy Drink");
+                                    System.out.println("You take an energy drink from the pile. YOUR BACKPACK CONTAINS: " + inventoryArray);
+                                }
                                 movePaused = false;
                                 break;
                         
                             default:
+                                movePaused = false;
                                 break;
                         }
 
