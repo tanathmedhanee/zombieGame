@@ -15,8 +15,8 @@ public class zombieGame {
         boolean gameOver = false;
         boolean movePaused = false;
         boolean npcInteractedWith = false;
-        boolean hasKey = true;
-        boolean hasGas = true;
+        boolean hasKey = false;
+        boolean hasGas = false;
         boolean zombieDefeated1 = false;
         boolean zombieDefeated2 = false;
 
