@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Random;
 
 public class zombieGame {
     public static void main(String[] args) {
@@ -8,10 +9,19 @@ public class zombieGame {
         int[] playerPosition = {1, 1};
 
         ArrayList<String> inventoryArray = new ArrayList<String>();
+
         boolean gunHave = false;
         boolean gameOver = false;
         boolean movePaused = false;
         boolean npcInteractedWith = false;
+
+        System.out.println("Greetings Player. The world you are in has been infested by zombies. To escape you need to enter the military complex ");
+        System.out.println("you have come across. There is a military helicopter in the far insides of the complex. However there are zombies");
+        System.out.println("in your path that awaits you. ");
+        System.out.println();
+        System.out.println("Objective 1: Find the helicopter keys using your map as a guide.");
+        System.out.println("Objective 2: Find the gas to fuel the helicopter.");
+        System.out.println("Final objective: ESCAPE.");
 
 //MOVEMENT CODE
         while (gameOver == false) {
