@@ -25,13 +25,17 @@ public class zombieGame {
         while (gameOver == false) {
             while (movePaused == false) {
 
-                if (inventoryArray.contains("Energy Drink") == true) {
+                if (inventoryArray.contains("Rifle") == true) {//sets default player damage to 5 if rifle is in inventory
+                    player.damage = 5;
+                }
+
+                if (inventoryArray.contains("Energy Drink") == true) {//permamently boosts player damage by 1 if has energy drink
                     System.out.println("The ENERGY DRINK slightly boosts your damage!");
                     player.damage = player.damage + 1;
                     inventoryArray.remove("Energy Drink");
                 }
 
-                if (player.health <= 9) {
+                if (player.health <= 9) {//heals player after fight if has medkit
                     if (inventoryArray.contains("MedKit") == true) {
                         System.out.println("You use the MEDKIT to patch yourself up!");
                         player.health = 10 ;
@@ -165,7 +169,8 @@ public class zombieGame {
                                     }
                                 }
                             }
-                            System.out.println("Slung across the zombie's back is a military rifle. You take the rifle. It's still loaded. YOU HAVE OBTAINED: RIFLE");
+                            inventoryArray.add("Rifle");
+                            System.out.println("Slung across the zombie's back is a military rifle. You take the rifle. It's still loaded. YOUR BACKPACK CONTAINS: " + inventoryArray);
                             gunHave = true;
                         } else {
                             System.out.println("There is nothing else of interest in here.");
