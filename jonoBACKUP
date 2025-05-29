@@ -14,6 +14,8 @@ public class zombieGame {
         boolean gameOver = false;
         boolean movePaused = false;
         boolean npcInteractedWith = false;
+        boolean hasKey = false;
+        boolean hasGas = false;
 
         System.out.println("Greetings Player. The world you are in has been infested by zombies. To escape you need to enter the military complex ");
         System.out.println("you have come across. There is a military helicopter in the far insides of the complex. However there are zombies");
