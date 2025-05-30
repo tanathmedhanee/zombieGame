@@ -1,0 +1,297 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Random;//not used
+
+public class zombieGame {
+    public static void main(String[] args) {
+        Scanner playerMoveInputScan = new Scanner(System.in);
+        Scanner playerDecisionInputScan = new Scanner(System.in);
+        int[] playerPosition = {1, 1};//player beginning coordinates
+        int[] playerPositionPrevious = {1, 1};
+        Player player = new Player("Player", 10, 3);//set player default stats
+        ArrayList<String> inventoryArray = new ArrayList<String>();//starts new empty inventory
+
+        boolean gunHave = false;
+        boolean gameOver = false;
+        boolean movePaused = false;
+        boolean npcInteractedWith = false;
+        boolean hasKey = false;
+        boolean hasGas = false;
+        boolean zombieDefeated1 = false;//killing one zombie used to kill both zombies in the game
+        boolean zombieDefeated2 = false;//now theyre seperate
+
+        introduction();//runs introduction method only once
+
+//MOVEMENT CODE
+        while (gameOver == false) {//only repeats while game is running
+            while (movePaused == false) {//stops printing and running movement code
+
+                if (inventoryArray.contains("Rifle") == true) {//sets default player damage to 5 if rifle is in inventory
+                    player.damage = 5;
+                }
+
+                if (inventoryArray.contains("Energy Drink") == true) {//permamently boosts player damage by 1 if has energy drink
+                    System.out.println("The ENERGY DRINK slightly boosts your damage!");
+                    player.damage = player.damage + 1;
+                    inventoryArray.remove("Energy Drink");
+                }
+
+                if (player.health <= 9) {//automatically heals player after fight if has medkit and is below full health
+                    if (inventoryArray.contains("MedKit") == true) {
+                        System.out.println("You use the MEDKIT to patch yourself up!");
+                        player.health = 10 ;
+                        inventoryArray.remove("MedKit");
+                    }
+                }
+
+                System.out.println("Use WASD to move, I to open your backpack, or E to view your stats.");
+                System.out.println("YOU ARE IN ROOM: " + playerPosition[0] + ", " + playerPosition[1] + ".");
+                String playerMoveInput = playerMoveInputScan.nextLine().toUpperCase();
+
+                playerPositionPrevious[0] = playerPosition[0];
+                playerPositionPrevious[1] = playerPosition[1];
+        
+                    switch (playerMoveInput) {
+                        case "W"://moves player north
+                            playerPosition[0] = playerPosition[0] + 1;
+                            break;
+                        
+                        case "A"://moves player west
+                        playerPosition[1] = playerPosition[1] + 1;
+                            break;
+                        
+                        case "S"://moves player south
+                        playerPosition[0] = playerPosition[0] - 1;
+                            break;
+                            
+                        case "D"://moves player east
+                        playerPosition[1] = playerPosition[1] - 1;
+                            break;
+
+                        case "I"://reveal contents of inventory array
+                        if (inventoryArray.isEmpty()) {
+                            System.out.println("YOUR BACKPACK IS EMPTY.");
+                        } else {
+                            System.out.println("YOUR BACKPACK CONTAINS: " + inventoryArray);
+                        }
+                            break;
+
+                        case "E"://reveal players current health and damage values
+                        System.out.println("HEALTH: " + player.health + ", DAMAGE: " + player.damage);
+                            break;
+                        
+                        default: System.out.println("INVALID INPUT");//print this if any other key is pressed
+                            break;
+                    }
+
+//RESETS PLAYER TO LAST POSITION IF OUT OF BOUNDS
+                if (playerPosition[0] >= 6 || playerPosition[0] <= 0 || playerPosition[1] >= 6 || playerPosition[1] <= 0) {
+                    System.out.println("OUT OF BOUNDS");
+                    playerPosition[0] = playerPositionPrevious[0];//previous player position set before asking player to move
+                    playerPosition[1] = playerPositionPrevious[1];
+                    }
+
+                String playerPositionString = playerPosition[0] + ", " + playerPosition[1];//workaround for switch case to read position array
+
+                switch (playerPositionString) {
+                    case "5, 5"://NPC interaction
+                    System.out.println("You spot a man lying against the wall.");
+                    if (npcInteractedWith == false) {//stops NPC interaction being able to run twice
+                        movePaused = true;
+                        System.out.println("'Name's Christian. This base was overrun with these things a couple hours ago. From my guess, I'm the only one who's still alive. I'm badly wounded... there's no saving me. Listen, I need a favor from you. Please... end my suffering. In return, I'll give you my adrenaline injector.'' (Y/N)");
+                        String playerDecisionInputNPC = playerDecisionInputScan.nextLine().toUpperCase();//changes input to only apply to this room
+
+                        switch (playerDecisionInputNPC) {
+                            case "Y":
+                            System.out.println("You steady your hand and do what must be done. Christian's suffering ends peacefully. You take the syringe he left behind. 'This should keep you alive out there,' you whisper to yourself.");
+
+                            if (inventoryArray.size() >= 6) { //stops player from adding 6th item to inventory
+                                System.out.println("Your backpack is already full. (MAX 5 ITEMS)");
+                            } else {
+                                inventoryArray.add("Adrenaline");
+                                System.out.println("You take the adrenaline from his hands. YOUR BACKPACK CONTAINS: " + inventoryArray);
+                            }
+                            movePaused = false;
+                            npcInteractedWith = true;
+                            break;
+                    
+                        default:
+                            System.out.println("While you're walking away, the soldier bites you. Game Over!");
+                            gameOver = true;
+                            break;
+                        }
+                    } else {//prints if npcInteractedWith is true
+                        System.out.println("Christian lies still.");
+                    }
+                    
+                        break;
+
+
+                    case "1, 2": //CAFETERIA
+                        System.out.println("The Cafeteria has been ransacked, save for some loose energy drink cans. Take one? (Y/N)");
+                        movePaused = true;
+                        String playerDecisionInputCAFETERIA = playerDecisionInputScan.nextLine().toUpperCase();//changes input to only apply to this room
+                        switch (playerDecisionInputCAFETERIA) {
+                            case "Y":
+                                if (inventoryArray.size() >= 6) { //stops player from adding 6th item to inventory
+                                    System.out.println("Your backpack is already full. (MAX 5 ITEMS)");
+                                } else {
+                                    inventoryArray.add("Energy Drink");
+                                    System.out.println("You take an energy drink from the pile. YOUR BACKPACK CONTAINS: " + inventoryArray);
+                                }
+                                movePaused = false;
+                                break;
+                        
+                            default:
+                                movePaused = false;
+                                break;
+                        }
+
+                        break;
+
+                    case "1, 3": //ARMOURY
+                        if (gunHave == false) {//stops this fight from being able to run twice
+                            System.out.println("The armoury door is left ajar. Inside, a zombie growls and leaps to attack you!.");
+                            if (!zombieDefeated1) {
+                                movePaused = true;
+                                combatSystem.combatStart(player);
+                                if (player.isAlive()) {
+                                    zombieDefeated1 = true;
+                                    movePaused = false;
+                                } else {
+                                    if (inventoryArray.contains("Adrenaline")) {//if player health falls below zero, checks for inventory item to restore health
+                                        System.out.println("You use the ADRENALINE SYRINGE to save yourself from death!");
+                                        player.health = 10 ;
+                                        inventoryArray.remove("Adrenaline");
+                                    } else {
+                                        System.out.println("You have died.");
+                                    gameOver = true;
+                                    break;
+                                    }
+                                }
+                            }
+                            inventoryArray.add("Rifle");
+                            System.out.println("Slung across the zombie's back is a military rifle. You take the rifle. It's still loaded. YOUR BACKPACK CONTAINS: " + inventoryArray);
+                            gunHave = true;
+                        } else {
+                            System.out.println("There is nothing else of interest in here.");
+                        }
+                        movePaused = false;
+                        break;
+
+                    case "4, 4": //RADIO ROOM
+                        System.out.println("YOU ARE IN THE RADIO ROOM.");
+                        break;
+
+                    case "1, 5": //LAUNDRY
+                        System.out.println("YOU ARE IN THE LAUNDRY.");
+                        break;
+
+                    case "3, 5": //BARRACKS
+                        if (hasKey == false) {//stops this code running twice
+                            System.out.println("The barracks is deserted. On the table, you spy the keys to the helicopter. Take it? (Y/N)");
+                        movePaused = true;
+                        String playerDecisionInputBARRACKS = playerDecisionInputScan.nextLine().toUpperCase();//changes input to only apply to this room
+                        switch (playerDecisionInputBARRACKS) {
+                            case "Y":
+                                if (inventoryArray.size() >= 6) { //stops player from adding 6th item to inventory
+                                    System.out.println("Your backpack is already full. (MAX 5 ITEMS)");
+                                } else {
+                                    inventoryArray.add("Helicopter Key");
+                                    System.out.println("With the key in your hands, you stand a chance at escaping the complex. YOUR BACKPACK CONTAINS: " + inventoryArray);
+                                    hasKey = true;//win condition
+                                }
+                                movePaused = false;//lets player leave without taking key
+                                break;
+                        
+                            default:
+                                movePaused = false;
+                                break;
+                        }
+                        } else {
+                            System.out.println("There is nothing of interest here. You already have the key.");
+                        }
+                        break;
+
+                    case "4, 5": //GARAGE
+                        if (hasGas == false) {
+                            System.out.println("Peeking into the military garage, you spy a emancipated, weakened zombie, guarding a canister of aviation fuel. It looks up and attacks you!");
+                            zombieNpc zombieWorker = new zombieNpc("Zombie Soldier", 2, 2);//defines zombie with unique stats
+                            if (!zombieDefeated2) {
+                                movePaused = true;
+                                combatSystem.combatStart(player);
+                                if (player.isAlive()) {
+                                    zombieDefeated2 = true;
+                                    movePaused = false;
+                                } else {
+                                    if (inventoryArray.contains("Adrenaline")) {
+                                        System.out.println("You use the ADRENALINE SYRINGE to save yourself from death!");
+                                        player.health = 10 ;
+                                        inventoryArray.remove("Adrenaline");
+                                    } else {
+                                        System.out.println("You have died.");
+                                    gameOver = true;
+                                    break;
+                                    }
+                                }
+                            }
+                            inventoryArray.add("Fuel Canister");
+                            System.out.println("The zombie writhes one final time then lays still. You carefully step over the body and retrieve the canister of fuel. With this, you can refuel the helicopter on the helipad. YOUR BACKPACK CONTAINS: " + inventoryArray);
+                            hasGas = true;//win condition
+                        } else {
+                            System.out.println("There is nothing else of interest in here. The other fuel canisters are all empty.");
+                        }
+                        movePaused = false;
+                        break;
+
+                    case "5, 1": //HELIPAD
+                        System.out.println("YOU ARE AT THE HELIPAD.");
+                        movePaused = true;
+                        if (hasGas == true && hasKey == true) {//win scenario
+                            System.out.println("You Win!");
+                            gameOver = true;
+                        } else {
+                            System.out.println("You need both the KEY and FUEL to operate the helicopter.");
+                            movePaused = false;
+                        }
+                        break;
+
+                    case "3, 3": //MEDICAL WARD
+                        movePaused = true;
+                        System.out.println("The Medical ward still has some loose medkits lying about. Take one? (Y/N)");
+                        String playerDecisionInputMEDICALWARD = playerDecisionInputScan.nextLine().toUpperCase();//changes input to only apply to this room
+                        switch (playerDecisionInputMEDICALWARD) {
+                            case "Y":
+                                if (inventoryArray.size() >= 6) { //stops player from adding 6th item to inventory
+                                    System.out.println("Your backpack is already full. (MAX 5 ITEMS)");
+                                } else {
+                                    inventoryArray.add("MedKit");
+                                    System.out.println("You take a medkit from the wall-mounted shelf. YOUR BACKPACK CONTAINS: " + inventoryArray);
+                                }
+                                movePaused = false;
+                                break;
+                    
+                            default:
+                                movePaused = false;//lets player leave without taking a medkit
+                                break;
+                        }
+                            break;
+                
+                    default:
+                        System.out.println("This hallway is empty.");//default print when not in a room of interest
+                        break;
+                }
+            }
+        }
+    }
+
+    static void introduction() {//prints at start of game
+        System.out.println("Greetings Player. The world you are in has been infested by zombies. To escape you need to enter the military complex ");
+        System.out.println("you have come across. There is a military helicopter in the far insides of the complex. However there are zombies");
+        System.out.println("in your path that awaits you. ");
+        System.out.println();
+        System.out.println("Objective 1: Find the helicopter keys using your map as a guide.");
+        System.out.println("Objective 2: Find the gas to fuel the helicopter.");
+        System.out.println("Final objective: ESCAPE.");
+    }
+}
