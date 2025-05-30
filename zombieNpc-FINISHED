@@ -1,0 +1,26 @@
+import java.util.Random;//not used
+public class zombieNpc {
+    String name;
+    double health;
+    double damage;
+
+    public zombieNpc(String name, double health, double damage) {//used to assign stats to respective names to zombie npc
+        this.name = name;
+        this.health = health;
+        this.damage = damage;
+    }
+    public void damage(Player player) {
+        player.damageTaken(this.damage);
+        System.out.println("The " + name + " Has attacked you, you have taken  " + damage + " damage!");
+    }
+    public boolean isAlive() {//checks if zombie health value above zero, changes boolean when below
+        return this.health > 0;
+    }
+    public String toString() {
+        return name;
+    }
+    public double updatedHealth() {
+        return health;
+    }
+}   
+ 
