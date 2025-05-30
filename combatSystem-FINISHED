@@ -1,0 +1,21 @@
+public class combatSystem {
+    
+    public static void combatStart(Player player) {
+        int randomDamage = (int) (Math.random() * 4);//generates random number between 0 and 3
+        
+        zombieNpc zombie = new zombieNpc("Zombie soldier", 10, randomDamage);//defines default zombie stats
+
+        while (player.isAlive() && zombie.isAlive()) {//repeats code as long as both player and zombie are active
+            player.damage(zombie);
+            System.out.println("Remaining Zombie health: " + zombie.updatedHealth());
+            
+            if (zombie.isAlive()) {//zombie damage subtracts from player health as long as zombie health above 0
+                zombie.damage(player);
+            }
+        }
+        if (player.isAlive() && !zombie.isAlive()) {//prints when player is alive and zombie is NOT alive
+            System.out.println(zombie.toString() + " has been defeated");
+            System.out.println(player.toString() + " survives with " + player.updatedHealth());
+        }
+    }
+}
